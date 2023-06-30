@@ -5,7 +5,7 @@ const server=http.createServer(app);
 const {Server} = require('socket.io')
 const cors=require('cors')
 require('dotenv').config()
-// app.use(cors())
+app.use(cors())
 app.get('/',(req,res)=>{
     res.send("hello")
 })
