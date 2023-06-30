@@ -5,17 +5,12 @@ const server=http.createServer(app);
 const {Server} = require('socket.io')
 const cors=require('cors')
 require('dotenv').config()
-app.use(cors())
+// app.use(cors())
 app.get('/',(req,res)=>{
     res.send("hello")
 })
 const origin=process.env.ORIGIN;
-const io=new Server(server,{
-    cors:{
-        origin:"https://2chessu.vercel.app",
-        methods:["GET","POST"]
-    }
-})
+const io=new Server(server)
 io.on("connection",(socket)=>{
     console.log(socket.id);
     socket.on("create_room",(data)=>{
