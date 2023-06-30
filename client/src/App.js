@@ -1,10 +1,9 @@
-import ChessBoard from "./components/ChessBoard";
 import MainMenu from "./components/MainMenu";
 import io from "socket.io-client";
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 import Rooms from "./pages/Rooms";
 import { UserContext } from "./context/usercontext";
-const socket=io.connect("https://2chessu-2k6g.vercel.app/")
+const socket=io.connect("https://2-chess-u.vercel.app")
 function App() {
   return (
     <div className="App " >
@@ -16,7 +15,6 @@ function App() {
           <Route exact path='/room/:roomID' element={<Rooms socket={socket}/>}/>
         </Routes>
       </Router>
-      {/* <ChessBoard/> */}
       </UserContext>
       
     </div>
