@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 import Rooms from "./pages/Rooms";
 import { UserContext } from "./context/usercontext";
-const socket=io.connect("https://2-chess-u.vercel.app/")
+const socket=io.connect("https://2chessu-2k6g.vercel.app/")
 function App() {
   return (
     <div className="App " >

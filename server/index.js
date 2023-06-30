@@ -12,7 +12,7 @@ app.get('/',(req,res)=>{
 const origin=process.env.ORIGIN;
 const io=new Server(server,{
     cors:{
-        origin:"https://2chessu-xk6r.vercel.app/",
+        origin:"https://2chessu.vercel.app/",
         methods:["GET","POST"]
     }
 })
