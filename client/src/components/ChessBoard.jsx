@@ -151,9 +151,14 @@ export default function ChessBoard({socket,room}) {
       Your Turn
     </button>
 :
-<p>
-  waiting for second player
-  </p>}
+state.isSpectator?
+<button className="p-3 bg-gray-300 rounded-full" disabled>
+Your Spectator
+</button>:
+  <button className="p-3 bg-gray-300 rounded-full" disabled>
+  Waiting for 2nd player
+</button>
+  }
 </div>
     ) 
   }
