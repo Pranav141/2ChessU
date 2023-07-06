@@ -2,8 +2,19 @@ import React,{useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useUserData } from '../context/usercontext';
 import Swal from 'sweetalert2'
+import windowErrorSound from '../assets/audio/windows_error.mp3'
+import gameJoinSound from '../assets/audio/game_join.mp3';
+import { useGameContext } from '../context/gamecontext';
+
 
 const MainMenu = ({socket}) => {
+    const audioWindowsError = new Audio(windowErrorSound);
+    const audioGameJoined = new Audio(gameJoinSound);
+    
+
+    const gameData=useGameContext();
+    const gameState=gameData.state;
+    const gameDispatch=gameData.dispatch;
     const navigate=useNavigate();
     const data=useUserData();
     const dispatch=data.dispatch;
@@ -16,10 +27,13 @@ const MainMenu = ({socket}) => {
             setRoom(roomID);
             const payload={username,room,boardOrientation:"white"}
             dispatch({type:"CREATE_ROOM",payload:payload})
+            gameDispatch({type:"SET_PLAYER_1",username:username})
             socket.emit("create_room",{roomID,username});
+            audioGameJoined.play();
             navigate(`/room/${roomID}`)
         }
         else{
+          audioWindowsError.play();
             return (
                 Swal.fire({
                     title: 'Username Error',
@@ -41,6 +55,7 @@ const MainMenu = ({socket}) => {
         }
         else{
             if(username===""){
+                audioWindowsError.play();
                 Swal.fire({
                     title: 'Username Error',
                     text: 'Please Enter a Username',
@@ -49,6 +64,7 @@ const MainMenu = ({socket}) => {
                   })
             }
             else{
+                audioWindowsError.play();
                 return (
                     Swal.fire({
                         title: 'Room ID Error',
@@ -62,6 +78,7 @@ const MainMenu = ({socket}) => {
         }
 
         useEffect(() => {
+          
             socket.on("check_room_1",(data)=>{
                 if(data.exist===1){
                     socket.emit("join_room",({room:data.room,username:data.username,time:new Date(Date.now()).getHours()+":"+new Date(Date.now()).getMinutes()}))
@@ -70,7 +87,9 @@ const MainMenu = ({socket}) => {
                         isSpectator:false,
                         boardOrientation:"black"
                     }
-                    dispatch({type:"JOIN_ROOM",payload:payload})                    
+                    dispatch({type:"JOIN_ROOM",payload:payload})    
+                    gameDispatch({type:"SET_PLAYER_2",username:data.username})
+                    audioGameJoined.play();
                     navigate(`/room/${data.room}`)
                 }
                 else if(data.exist>1){
@@ -79,10 +98,13 @@ const MainMenu = ({socket}) => {
                         isPlayer:false,
                         isSpectator:true
                     }
-                    dispatch({type:"JOIN_ROOM",payload:payload})                    
+                    dispatch({type:"JOIN_ROOM",payload:payload})     
+            audioGameJoined.play();
+
                     navigate(`/room/${data.room}`)
                 }
                 else{
+                    audioWindowsError.play();
                     Swal.fire({
                         title: 'Room ID Error',
                         text: `Please Enter a Valid Room ID ` ,

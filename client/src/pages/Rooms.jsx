@@ -10,7 +10,9 @@ const Rooms = ({socket}) => {
     <div className='flex m-4'>
         <div className='w-3/5 flex'>
             <ChessBoard className='justify-center items-center' socket={socket} room={roomID}/>
+        
         </div>
+        
         <div className='w-2/5 '>
 
         <Clipboard roomID={roomID}/>

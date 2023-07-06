@@ -2,10 +2,19 @@ import React,{useState} from 'react'
 import { useEffect } from 'react';
 import { useUserData } from '../context/usercontext';
 import ScrollToBottom from 'react-scroll-to-bottom';
-
+import notifySound from '../assets/audio/notify.mp3';
+import gameJoinSound from '../assets/audio/game_join.mp3';
+import { useGameContext } from '../context/gamecontext';
 const Chats = ({socket,room}) => {
     const data=useUserData();
+    const audioNotify = new Audio(notifySound);
+    const audioGameJoined = new Audio(gameJoinSound);
+
     const state=data.state;
+
+    const gameData=useGameContext();
+    const gameState=gameData.state;
+    const gameDispatch=gameData.dispatch;
     const [messageList,setMessageList]=useState([{
         type:"game_joined",
         room:room,
@@ -16,13 +25,38 @@ const Chats = ({socket,room}) => {
     const [currentMessage,setCurrentMessage]=useState("")
     useEffect(()=>{
         socket.on("game_joined",(data)=>{
+            audioGameJoined.play();
+            // if(gameState?.isPlayer1){
+            //     socket.emit("SEND_PLAYER1_NAME",{
+            //         name:gameState.player1,
+                    
+            //     })
+            // }
+            // else if(gameData.isPlayer2){
+            //     socket.emit("SEND_PLAYER2_NAME",{
+            //         name:gameState.player2
+            //     })
+            // }
             setMessageList((m)=>[...m,data]);
         })
         socket.on("receive_message",(data)=>{
+            // playNotifySound();
+            audioNotify.play();
             setMessageList((m)=>[...m,data]);
         })
-    },[socket])
+
+        socket.on("SET_PLAYER1_NAME",(data)=>{
+            gameDispatch({type:"SET_PLAYER1_NAME",username:data})
+        })
+
+        socket.on("SET_PLAYER2_NAME",(data)=>{
+            gameDispatch({type:"SET_PLAYER2_NAME",username:data})
+        })
+        
+    },[socket,gameDispatch])
     const sendMessage=()=>{
+        // 
+
         if(currentMessage===""){
             return
         }
@@ -44,14 +78,14 @@ const Chats = ({socket,room}) => {
         setMessageList((m)=>[...m,temp])
         setCurrentMessage("")
     }
-    console.log(messageList);
+    // console.log(messageList);
   return (
     <div className=' border-2 rounded-lg rounded-b-2xl h-2/3'>
         <div className='border-b-2 p-2'>
             Live chat ({state.username})
         </div>
      <div className='h-full'>
-
+{console.log(gameState)}
         <div className='h-4/5'>
      <ScrollToBottom mode='bottom'  className='h-full w-full overflow-x-hidden'>
             {messageList?.map((message)=>{
