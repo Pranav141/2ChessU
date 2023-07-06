@@ -80,12 +80,11 @@ const Chats = ({socket,room}) => {
     }
     // console.log(messageList);
   return (
-    <div className=' border-2 rounded-lg rounded-b-2xl h-2/3'>
+    <div className=' border-2 rounded-lg rounded-b-2xl lg:h-2/3 h-[250px]'>
         <div className='border-b-2 p-2'>
             Live chat ({state.username})
         </div>
      <div className='h-full'>
-{console.log(gameState)}
         <div className='h-4/5'>
      <ScrollToBottom mode='bottom'  className='h-full w-full overflow-x-hidden'>
             {messageList?.map((message)=>{
