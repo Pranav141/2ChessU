@@ -27,7 +27,7 @@ const MainMenu = ({socket}) => {
             setRoom(roomID);
             const payload={username,room,boardOrientation:"white"}
             dispatch({type:"CREATE_ROOM",payload:payload})
-            gameDispatch({type:"SET_PLAYER_1",username:username})
+            // gameDispatch({type:"SET_PLAYER_1",username:username})
             socket.emit("create_room",{roomID,username});
             audioGameJoined.play();
             navigate(`/room/${roomID}`)
@@ -88,7 +88,7 @@ const MainMenu = ({socket}) => {
                         boardOrientation:"black"
                     }
                     dispatch({type:"JOIN_ROOM",payload:payload})    
-                    gameDispatch({type:"SET_PLAYER_2",username:data.username})
+                    // gameDispatch({type:"SET_PLAYER_2",username:data.username})
                     audioGameJoined.play();
                     navigate(`/room/${data.room}`)
                 }
@@ -99,8 +99,7 @@ const MainMenu = ({socket}) => {
                         isSpectator:true
                     }
                     dispatch({type:"JOIN_ROOM",payload:payload})     
-            audioGameJoined.play();
-
+                    audioGameJoined.play();
                     navigate(`/room/${data.room}`)
                 }
                 else{

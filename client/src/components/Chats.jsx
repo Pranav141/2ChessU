@@ -45,13 +45,13 @@ const Chats = ({socket,room}) => {
             setMessageList((m)=>[...m,data]);
         })
 
-        socket.on("SET_PLAYER1_NAME",(data)=>{
-            gameDispatch({type:"SET_PLAYER1_NAME",username:data})
-        })
+        // socket.on("SET_PLAYER1_NAME",(data)=>{
+        //     gameDispatch({type:"SET_PLAYER1_NAME",username:data})
+        // })
 
-        socket.on("SET_PLAYER2_NAME",(data)=>{
-            gameDispatch({type:"SET_PLAYER2_NAME",username:data})
-        })
+        // socket.on("SET_PLAYER2_NAME",(data)=>{
+        //     gameDispatch({type:"SET_PLAYER2_NAME",username:data})
+        // })
         
     },[socket,gameDispatch])
     const sendMessage=()=>{

@@ -31,10 +31,10 @@ const reducer=(state,action)=>{
 export const GameContext = ({children}) => {
     const initialState={
         gamePlayable:false,
-        player1:'',
-        player2:'',
-        isPlayer1:false,
-        isPlayer2:false,
+        // player1:'',
+        // player2:'',
+        // isPlayer1:false,
+        // isPlayer2:false,
 
     }
     const [state,dispatch]=useReducer(reducer,initialState);
