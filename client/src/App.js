@@ -4,7 +4,7 @@ import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 import Rooms from "./pages/Rooms";
 import { UserContext } from "./context/usercontext";
 import { GameContext } from "./context/gamecontext";
-const socket=io.connect("http://localhost:3001")//https://two-chess-u.onrender.com
+const socket=io.connect("https://two-chess-u.onrender.com")//https://two-chess-u.onrender.com
 function App() {
   return (
     <div className="App " >
